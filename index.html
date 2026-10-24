@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicSignal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+  <!-- SIGN IN -->
+  <section id="signinPage" class="signin-page">
+    <div class="signin-card">
+      <h1>CivicSignal</h1>
+      <p>Small signals. Stronger communities.</p>
+
+
+      <form id="signinForm">
+        <label for="nameInput">Your name</label>
+        <input id="nameInput" required maxlength="45"
+               placeholder="Enter your name">
+
+
+        <label for="neighborhoodInput">Neighborhood</label>
+        <select id="neighborhoodInput">
+          <option>Willow Creek</option>
+          <option>Maple Grove</option>
+          <option>Oak Ridge</option>
+        </select>
+
+
+        <label for="accessCodeInput">Neighborhood access code</label>
+        <input id="accessCodeInput" required minlength="6"
+               maxlength="6" placeholder="Enter your code">
+
+
+        <p class="note">Demo codes: WILLO1, MAPLE1, OAKRI1</p>
+
+
+        <button class="primary-btn full-width" type="submit">
+          Join My Community
+        </button>
+      </form>
+    </div>
+  </section>
+
+
+  <!-- MAIN APP -->
+  <div id="app" class="app hidden">
+
+
+    <aside class="sidebar">
+      <h2>CivicSignal</h2>
+      <p id="sideNeighborhood">Willow Creek</p>
+
+
+      <nav>
+        <button class="nav-btn active" data-page="dashboard">Overview</button>
+        <button class="nav-btn" data-page="reports">Community Reports</button>
+        <button class="nav-btn" data-page="wellbeing">Community Life</button>
+        <button class="nav-btn" data-page="neighbors">Neighbors</button>
+        <button class="nav-btn" data-page="messages">Messages</button>
+        <button class="nav-btn" data-page="hoa">HOA Board</button>
+        <button class="nav-btn" data-page="settings">Settings</button>
+      </nav>
+
+
+      <div class="sidebar-bottom">
+        <p>Signed in as <strong id="sideName">Neighbor</strong></p>
+        <button id="signoutBtn" class="outline-btn full-width" type="button">
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="menu-btn" type="button"
+                aria-label="Toggle navigation">Menu</button>
+        <strong id="pageTitle">Overview</strong>
+        <span id="topName">Neighbor</span>
+      </header>
+
+
+      <div class="content">
+
+
+        <!-- DASHBOARD -->
+        <section id="page-dashboard" class="page">
+          <h1>Welcome, <span id="welcomeName">neighbor</span>!</h1>
+          <p>Here's what's happening in
+            <strong id="welcomeNeighborhood">Willow Creek</strong>.
+          </p>
+
+
+          <div class="hero">
+            <h2>Your Neighborhood. Your Voice.</h2>
+            <p>Share concerns and help your community improve.</p>
+            <button class="light-btn" data-goto="reports" type="button">
+              View Reports
+            </button>
+          </div>
+
+
+          <div class="quick-actions">
+            <h2>Quick Information</h2>
+            <button data-quick-action="quiet-hours" type="button">Quiet Hours</button>
+            <button data-quick-action="trash-schedule" type="button">Trash Schedule</button>
+            <button data-quick-action="hoa-dates" type="button">HOA Dates</button>
+          </div>
+
+
+          <h2>Community at a Glance</h2>
+
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              Total Reports
+              <strong id="totalReports">0</strong>
+            </article>
+            <article class="stat-card">
+              Needs Attention
+              <strong id="openReports">0</strong>
+            </article>
+            <article class="stat-card">
+              Resolved
+              <strong id="resolvedReports">0</strong>
+            </article>
+            <article class="stat-card">
+              Neighbors
+              <strong id="totalNeighbors">0</strong>
+            </article>
+          </div>
+
+
+          <section class="panel">
+            <h2>Recent Reports</h2>
+            <div id="recentReports" class="report-list"></div>
+            <button class="outline-btn" data-goto="reports" type="button">
+              View All Reports
+            </button>
+          </section>
+
+
+          <section class="panel">
+            <h2>Your Neighbors</h2>
+            <div id="neighborPreview" class="people-list"></div>
+            <button class="outline-btn" data-goto="neighbors" type="button">
+              Meet Your Neighbors
+            </button>
+          </section>
+
+
+          <section class="panel">
+            <h2>Community Pulse</h2>
+            <div id="categorySummary"></div>
+          </section>
+
+
+          <section class="panel">
+            <h2>Contact Your HOA</h2>
+            <p>Find contacts for neighborhood questions and projects.</p>
+            <button class="primary-btn" data-goto="hoa" type="button">
+              View HOA Board
+            </button>
+          </section>
+        </section>
+
+
+        <!-- REPORTS -->
+        <section id="page-reports" class="page hidden">
+          <h1>Community Reports</h1>
+          <p>Share neighborhood issues and follow their progress.</p>
+
+
+          <section class="panel" id="reportComposer">
+            <h2>Create a Report</h2>
+
+
+            <form id="reportForm">
+              <label for="reportTitle">Report Title</label>
+              <input id="reportTitle" required maxlength="90"
+                     placeholder="Streetlight not working">
+
+
+              <label for="reportCategory">Category</label>
+              <select id="reportCategory">
+                <option>Roads & sidewalks</option>
+                <option>Lighting</option>
+                <option>Waste & cleanliness</option>
+                <option>Parks & landscaping</option>
+                <option>Noise & safety</option>
+                <option>Other</option>
+              </select>
+
+
+              <label for="reportPriority">Priority</label>
+              <select id="reportPriority">
+                <option>Normal</option>
+                <option>High</option>
+                <option>Low</option>
+              </select>
+
+
+              <label for="reportLocation">Location</label>
+              <input id="reportLocation" required maxlength="100"
+                     placeholder="Street or nearby location">
+
+
+              <label for="reportDescription">Description</label>
+              <textarea id="reportDescription" required maxlength="600"
+                        rows="4"></textarea>
+
+
+              <label class="checkbox-label" for="anonymousReport">
+                <input id="anonymousReport" type="checkbox">
+                Post anonymously
+              </label>
+
+
+              <button class="primary-btn" type="submit">
+                Share with Neighborhood
+              </button>
+            </form>
+          </section>
+
+
+          <section class="panel">
+            <h2>Browse Reports</h2>
+
+
+            <div class="report-view-tabs">
+              <button class="report-view-tab active" data-report-view="all" type="button">
+                All
+              </button>
+              <button class="report-view-tab" data-report-view="active" type="button">
+                Needs Attention
+              </button>
+              <button class="report-view-tab" data-report-view="resolved" type="button">
+                Recently Solved
+              </button>
+            </div>
+
+
+            <div class="filter-row">
+              <input id="reportSearch" placeholder="Search reports">
+
+
+              <select id="statusFilter">
+                <option value="All">All Statuses</option>
+                <option>Reported</option>
+                <option>Under review</option>
+                <option>In progress</option>
+                <option>Resolved</option>
+              </select>
+
+
+              <select id="categoryFilter">
+                <option value="All">All Categories</option>
+                <option>Roads & sidewalks</option>
+                <option>Lighting</option>
+                <option>Waste & cleanliness</option>
+                <option>Parks & landscaping</option>
+                <option>Noise & safety</option>
+                <option>Other</option>
+              </select>
+
+
+              <select id="reportSort">
+                <option value="recent">Most Recent</option>
+                <option value="attention">Needs Attention</option>
+                <option value="nearest">Nearest to Me</option>
+              </select>
+            </div>
+
+
+            <div id="allReports" class="report-list"></div>
+          </section>
+        </section>
+
+
+        <!-- COMMUNITY LIFE -->
+        <section id="page-wellbeing" class="page hidden">
+          <h1>Community Life</h1>
+          <p>Tools to help neighbors connect and support each other.</p>
+
+
+          <div class="wellbeing-grid">
+
+
+            <section class="panel">
+              <h2>1. Daily Calm Horizon</h2>
+              <p id="calmWeather">Weather information is not connected.</p>
+              <p id="calmQuietHours">Quiet-hour schedule needs to be added.</p>
+              <p id="calmTrashSchedule">Trash schedule needs to be added.</p>
+              <p id="calmPositiveNote">Share something positive about your community.</p>
+            </section>
+
+
+            <section class="panel">
+              <h2>2. Borrow and Lend</h2>
+              <div id="lendItems"></div>
+
+
+              <form id="lendItemForm">
+                <label for="lendItemName">Item</label>
+                <input id="lendItemName" required placeholder="Step ladder">
+
+
+                <label for="lendItemCategory">Category</label>
+                <select id="lendItemCategory">
+                  <option>Tools and equipment</option>
+                  <option>Garden</option>
+                  <option>Party supplies</option>
+                  <option>Other</option>
+                </select>
+
+
+                <label for="lendAvailability">Availability</label>
+                <select id="lendAvailability">
+                  <option>Available now</option>
+                  <option>Weekend only</option>
+                  <option>Ask me</option>
+                </select>
+
+
+                <button class="outline-btn" type="submit">Offer Item</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>3. Helping-Hand Requests</h2>
+              <div id="helpRequests"></div>
+
+
+              <form id="helpRequestForm">
+                <label for="helpRequestType">Request Type</label>
+                <select id="helpRequestType">
+                  <option>Ask for help</option>
+                  <option>Offer help</option>
+                </select>
+
+
+                <label for="helpRequestCategory">Type of Help</label>
+                <select id="helpRequestCategory">
+                  <option>Bring in a bin</option>
+                  <option>Water plants</option>
+                  <option>Pet check-in</option>
+                  <option>Groceries</option>
+                  <option>Other</option>
+                </select>
+
+
+                <label for="helpRequestDescription">Details</label>
+                <textarea id="helpRequestDescription" required maxlength="350"></textarea>
+
+
+                <button class="outline-btn" type="submit">Share Request</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>4. HOA Budget Transparency</h2>
+              <p id="hoaBudgetSummary">Sample budget information.</p>
+              <div id="budgetItems"></div>
+              <p class="note">Amounts must be confirmed by the HOA.</p>
+            </section>
+
+
+            <section class="panel">
+              <h2>5. Peace and Quiet Board</h2>
+              <div id="quietNotices"></div>
+
+
+              <form id="quietHoursForm">
+                <label for="quietNoticeTitle">Notice</label>
+                <input id="quietNoticeTitle" required>
+
+
+                <label for="quietNoticeDate">Date</label>
+                <input id="quietNoticeDate" type="date" required>
+
+
+                <label for="quietNoticeTime">Start Time</label>
+                <input id="quietNoticeTime" type="time" required>
+
+
+                <label for="quietNoticeDetails">Details</label>
+                <input id="quietNoticeDetails" maxlength="180">
+
+
+                <button class="outline-btn" type="submit">Post Notice</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>6. Walking and Pet Buddies</h2>
+              <div id="buddyList"></div>
+
+
+              <form id="buddyForm">
+                <label for="buddyActivity">Activity</label>
+                <select id="buddyActivity">
+                  <option>Dog walk</option>
+                  <option>Neighborhood walk</option>
+                  <option>Jogging</option>
+                  <option>Park meetup</option>
+                </select>
+
+
+                <label for="buddyDay">Day</label>
+                <select id="buddyDay">
+                  <option>Weekdays</option>
+                  <option>Saturday</option>
+                  <option>Sunday</option>
+                  <option>Flexible</option>
+                </select>
+
+
+                <label for="buddyTime">Time</label>
+                <select id="buddyTime">
+                  <option>Morning</option>
+                  <option>Afternoon</option>
+                  <option>Evening</option>
+                  <option>Flexible</option>
+                </select>
+
+
+                <button class="outline-btn" type="submit">Share Interests</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>7. Youth Services</h2>
+              <div id="youthServices"></div>
+
+
+              <form id="youthServiceForm">
+                <label for="youthServiceType">Service</label>
+                <select id="youthServiceType">
+                  <option>Lawn care</option>
+                  <option>Pet sitting</option>
+                  <option>Babysitting</option>
+                  <option>Tutoring</option>
+                  <option>Other</option>
+                </select>
+
+
+                <label for="youthServiceDetails">Details</label>
+                <input id="youthServiceDetails" maxlength="180">
+
+
+                <button class="outline-btn" type="submit">Submit for Review</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>8. Care Packages and Meal Trains</h2>
+              <div id="mealTrainList"></div>
+
+
+              <form id="mealTrainForm">
+                <label for="mealTrainOccasion">Support Type</label>
+                <select id="mealTrainOccasion">
+                  <option>Welcome a new baby</option>
+                  <option>Recovery support</option>
+                  <option>Care package</option>
+                  <option>Other</option>
+                </select>
+
+
+                <label for="mealTrainDate">Preferred Date</label>
+                <input id="mealTrainDate" type="date">
+
+
+                <label for="mealTrainSlots">Number of Helpers</label>
+                <select id="mealTrainSlots">
+                  <option>1-2</option>
+                  <option>3-5</option>
+                  <option>6+</option>
+                  <option>Flexible</option>
+                </select>
+
+
+                <label for="mealTrainDetails">Details</label>
+                <textarea id="mealTrainDetails" maxlength="300"></textarea>
+
+
+                <button class="outline-btn" type="submit">Start Care Plan</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>9. Events and Community Polls</h2>
+
+
+              <div id="communityEvents"></div>
+
+
+              <div id="communityPoll">
+                <p>What should the neighborhood improve?</p>
+                <button class="poll-option" data-poll-option="More park seating" type="button">More Park Seating</button>
+                <button class="poll-option" data-poll-option="Safer walking paths" type="button">Safer Walking Paths</button>
+                <button class="poll-option" data-poll-option="Community events" type="button">Community Events</button>
+                <p id="pollFeedback"></p>
+              </div>
+
+
+              <form id="communityEventForm">
+                <label for="communityEventTitle">Suggest an Event</label>
+                <input id="communityEventTitle" required maxlength="100">
+                <button class="outline-btn" type="submit">Suggest Event</button>
+              </form>
+            </section>
+
+
+            <section class="panel">
+              <h2>10. Printable Bulletin</h2>
+              <p>Prepare a printable summary of community information.</p>
+              <button id="exportBulletinBtn" class="outline-btn" type="button">
+                Print Bulletin
+              </button>
+            </section>
+
+
+          </div>
+        </section>
+
+
+        <!-- NEIGHBORS -->
+        <section id="page-neighbors" class="page hidden">
+          <h1>Your Neighbors</h1>
+
+
+          <section class="panel">
+            <input id="peopleSearch" placeholder="Search neighbors">
+            <div id="peopleGrid" class="people-grid"></div>
+          </section>
+
+
+          <p class="note">These are sample resident profiles.</p>
+        </section>
+
+
+        <!-- MESSAGES -->
+        <section id="page-messages" class="page hidden">
+          <h1>Messages</h1>
+
+
+          <div class="two-column">
+            <section class="panel">
+              <h2>Write a Message</h2>
+
+
+              <form id="messageForm">
+                <label for="messageRecipient">Send To</label>
+                <select id="messageRecipient" required></select>
+
+
+                <label for="messageSubject">Subject</label>
+                <input id="messageSubject" required maxlength="100">
+
+
+                <label for="messageBody">Message</label>
+                <textarea id="messageBody" required maxlength="1500"></textarea>
+
+
+                <button class="primary-btn" type="submit">Save Message</button>
+              </form>
+
+
+              <p class="note">Messages are saved in this browser and are not delivered.</p>
+            </section>
+
+
+            <section class="panel">
+              <h2>Sent Messages</h2>
+              <div id="sentMessages"></div>
+            </section>
+          </div>
+        </section>
+
+
+        <!-- HOA BOARD -->
+        <section id="page-hoa" class="page hidden">
+          <h1>HOA Board</h1>
+          <p>Find contacts for neighborhood questions.</p>
+
+
+          <div id="hoaGrid" class="people-grid"></div>
+
+
+          <section class="panel">
+            <h2>Board Availability</h2>
+            <div id="hoaAvailability">
+              Office hours have not been added.
+            </div>
+          </section>
+
+
+          <button class="primary-btn" data-goto="messages" type="button">
+            Go to Messages
+          </button>
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section id="page-settings" class="page hidden">
+          <h1>Settings</h1>
+          <p>Change how you use CivicSignal.</p>
+
+
+          <section class="panel">
+            <h2>Preferences</h2>
+
+
+            <form id="settingsForm">
+              <label class="checkbox-label" for="prefAnonymous">
+                <input id="prefAnonymous" type="checkbox">
+                Post reports anonymously by default
+              </label>
+
+
+              <p class="note">
+                New reports will automatically have anonymous posting selected.
+              </p>
+
+
+              <label class="checkbox-label" for="prefCompact">
+                <input id="prefCompact" type="checkbox">
+                Use compact layout
+              </label>
+
+
+              <p class="note">
+                Reduce spacing around cards to fit more information on screen.
+              </p>
+
+
+              <button class="primary-btn" type="submit">
+                Save Preferences
+              </button>
+            </form>
+          </section>
+
+
+          <section class="panel">
+            <h2>Account</h2>
+            <p>Sign out to return to the welcome screen.</p>
+            <button class="outline-btn" type="button" data-signout>
+              Sign Out
+            </button>
+          </section>
+        </section>
+
+
+        <footer class="footer">
+          CivicSignal | Better neighborhoods start with a signal.
+          <span>Prototype using sample data</span>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+
+  <!-- REPORT DETAILS -->
+  <div id="reportModal" class="modal hidden"
+       role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <button id="closeModal" class="close-btn" type="button">Close</button>
+      <h2 id="modalTitle">Report Details</h2>
+      <p id="modalMeta"></p>
+      <p id="modalDescription"></p>
+      <div id="modalStatus"></div>
+      <div id="modalProgress"></div>
+      <button id="modalSupport" class="outline-btn" type="button">
+        I Noticed This Too
+      </button>
+    </div>
+  </div>
+
+
+  <div id="toast" class="toast" role="status"></div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
